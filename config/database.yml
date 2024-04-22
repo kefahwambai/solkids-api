@@ -1,0 +1,28 @@
+
+#
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  # For details on connection pooling, see Rails configuration guide
+  # https://guides.rubyonrails.org/configuring.html#database-pooling
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: <%= ENV['POSTGRES_HOST'] %>
+  port: 5432
+
+development:
+  <<: *default
+  database: solapi_development
+  username: <%= ENV['POSTGRES_USER'] %>
+  password: <%= ENV['POSTGRES_PASSWORD'] %>
+
+test:
+  <<: *default
+  database: solapi_test
+
+
+production:
+  <<: *default
+  url: <%= ENV["DATABASE_URL"] %>
+  database: solapi_production
+  username: solapi
+  password: <%= ENV["SOLAPI_DATABASE_PASSWORD"] %>
